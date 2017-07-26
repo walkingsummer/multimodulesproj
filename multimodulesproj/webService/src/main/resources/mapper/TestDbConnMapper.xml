@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.summer.service.demo.dao.TestDbConnDao">
+
+	<resultMap id="goods" type="com.summer.service.demo.bean.Goods">
+		<id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+		<result column="goods_number" property="goodsNumber"/>
+		<result column="goods_name" property="goodsName"/>
+		<result column="cost_price" property="costPrice"/>
+		<result column="create_time" property="createTime"/>
+		<result column="inventory_amount" property="inventoryAmount"/>
+	</resultMap>
+
+	<sql id="goods_columns" >
+		goods_name,
+		goods_number,
+		inventory_amount,
+		cost_price,
+		create_time
+	</sql>
+
+	<select id="testDbConn" resultType="int">
+		select 1
+	</select>
+
+	<select id="getGoodsById" resultMap="goods" parameterType="map">
+		select
+			<include refid="goods_columns" />
+		FROM
+			t_goods
+		WHERE
+			goods_id = #{id, jdbcType=INTEGER}
+	</select>
+
+	<insert id="addGoods" parameterType="com.summer.service.demo.bean.Goods">
+		insert into t_goods(
+			<include refid="goods_columns" />
+		)
+		values(
+			#{goodsName},
+			#{goodsNumber},
+			#{inventoryAmount},
+			#{costPrice},
+			getdate()
+		)
+	</insert>
+
+	<select id="getGoodsList" parameterType="com.summer.service.demo.bean.BasePage" resultMap="goods">
+		select top ${pageSize} <include refid="goods_columns" /> from
+		(
+			SELECT TOP ((${pageNo})*${pageSize})
+			<include refid="goods_columns" />
+			FROM t_goods
+			order by CREATE_TIME desc
+		) t
+		order by t.CREATE_TIME;
+	</select>
+
+	<update id="addInventory" parameterType="map">
+		update t_goods
+		set inventory_amount = inventory_amount + #{inventory}
+		where goods_id = #{goodsId}
+	</update>
+	
+</mapper>

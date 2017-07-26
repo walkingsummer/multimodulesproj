@@ -1,0 +1,28 @@
+
+.activityModel{
+    margin: 1px;
+    width: 19px;
+    height: 19px;
+    background: midnightblue;
+    position:absolute;
+}
+
+.negativeModel{
+    margin: 1px;
+    width: 19px;
+    height: 19px;
+    background: gray;
+    position:absolute;
+}
+
+.elsfkBorder{
+    background-color: bisque;
+    height: 500px;
+    width: 320px;
+    border-color: black;
+}
+
+.bodyStyle{
+    background-color: cadetblue;
+
+}

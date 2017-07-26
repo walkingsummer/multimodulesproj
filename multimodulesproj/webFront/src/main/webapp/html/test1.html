@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
+    </script>
+
+    <link rel="stylesheet" href="/css/test1.css" type="text/css">
+
+    <script>
+        $(document).ready(
+            function(){
+                var reqJson = {pageNo:1,pageSize:2};
+                $("button").click(function(){
+                    $.ajax({
+                        type:"post",
+                        dataType:"json",
+                        contentType:"application/json",
+                        url:"/demo/getGoodsList.do",
+                        data:JSON.stringify(reqJson),
+                        success: function(data, status){alert(JSON.stringify(data)+ status)}
+                    });
+                });
+            }
+        );
+    </script>
+
+</head>
+<body>
+
+    <h1>hello! this is test1.html file.</h1>
+    <p>如果你点我，我就会小时</p>
+    <p>继续啊</p>
+
+    <div id="div1">用于放置返回数据</div>
+    <button>发送请求</button>
+
+</body>
+</html>
